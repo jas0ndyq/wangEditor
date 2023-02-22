@@ -9,4 +9,7 @@ import './assets/index.less'
 import './locale/index'
 
 import wangEditorTableModule from './module/index'
+
+console.log('in table module...')
+
 export default wangEditorTableModule

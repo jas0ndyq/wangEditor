@@ -28,6 +28,14 @@ export function isTableWithHeader(tableNode: TableElement): boolean {
 }
 
 /**
+ * 表格是否在选中状态下
+ * @param tableNode table node
+ */
+export function isTableWithChooser(tableNode: TableElement): boolean {
+  return tableNode.isChooser || false
+}
+
+/**
  * 单元格是否在第一行
  * @param editor editor
  * @param cellNode cell node

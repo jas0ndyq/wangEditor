@@ -7,6 +7,7 @@ import isEqual from 'lodash.isequal'
 import { Editor, Element, Transforms, Range, Node } from 'slate'
 import { IButtonMenu, IDomEditor, DomEditor, t } from '@wangeditor/core'
 import { DEL_COL_SVG } from '../../constants/svg'
+import { TableElement } from '../custom-types'
 
 class DeleteCol implements IButtonMenu {
   readonly title = t('tableModule.deleteCol')
@@ -31,6 +32,14 @@ class DeleteCol implements IButtonMenu {
     const cellNode = DomEditor.getSelectedNodeByType(editor, 'table-cell')
     if (cellNode == null) {
       // 选区未处于 table cell node ，则禁用
+      return true
+    }
+    const rowNode = DomEditor.getParentNode(editor, cellNode)
+    if (!rowNode) {
+      return true
+    }
+    const tableNode = DomEditor.getParentNode(editor, rowNode) as TableElement
+    if (tableNode.isChooser) {
       return true
     }
     return false

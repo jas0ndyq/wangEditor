@@ -25,4 +25,5 @@ export type TableElement = {
   type: 'table'
   width: string
   children: TableRowElement[]
+  isChooser?: boolean
 }

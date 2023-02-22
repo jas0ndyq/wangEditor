@@ -6,6 +6,7 @@
 import { Editor, Transforms, Range } from 'slate'
 import { IButtonMenu, IDomEditor, DomEditor, t } from '@wangeditor/core'
 import { DEL_ROW_SVG } from '../../constants/svg'
+import { TableElement } from '../custom-types'
 
 class DeleteRow implements IButtonMenu {
   readonly title = t('tableModule.deleteRow')
@@ -30,6 +31,10 @@ class DeleteRow implements IButtonMenu {
     const rowNode = DomEditor.getSelectedNodeByType(editor, 'table-row')
     if (rowNode == null) {
       // 选区未处于 table row node ，则禁用
+      return true
+    }
+    const tableNode = DomEditor.getParentNode(editor, rowNode) as TableElement
+    if (tableNode.isChooser) {
       return true
     }
     return false

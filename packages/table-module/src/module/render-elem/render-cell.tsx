@@ -89,7 +89,8 @@ function renderTableCell(
   }
 
   // ------------------ 是第一行：1. 判断 th ；2. 拖拽列宽 ------------------
-  const Tag = isHeader ? 'th' : 'td'
+  // const Tag = isHeader ? 'th' : 'td'
+  const Tag = isHeader ? 'td' : 'td'
 
   const vnode = (
     <Tag

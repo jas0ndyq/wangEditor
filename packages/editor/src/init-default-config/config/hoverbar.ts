@@ -24,7 +24,9 @@ const COMMON_HOVERBAR_KEYS = {
   table: {
     menuKeys: [
       'enter',
-      'tableHeader',
+      // 'tableHeader',
+      'tableChooser',
+      'tableMerger',
       'tableFullWidth',
       'insertTableRow',
       'deleteTableRow',

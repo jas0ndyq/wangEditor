@@ -6,7 +6,7 @@
 import { Editor, Transforms, Range, Path } from 'slate'
 import { IButtonMenu, IDomEditor, DomEditor, t } from '@wangeditor/core'
 import { ADD_ROW_SVG } from '../../constants/svg'
-import { TableRowElement, TableCellElement } from '../custom-types'
+import { TableRowElement, TableCellElement, TableElement } from '../custom-types'
 
 class InsertRow implements IButtonMenu {
   readonly title = t('tableModule.insertRow')
@@ -28,11 +28,15 @@ class InsertRow implements IButtonMenu {
     if (selection == null) return true
     if (!Range.isCollapsed(selection)) return true
 
-    const tableNode = DomEditor.getSelectedNodeByType(editor, 'table')
+    const tableNode = DomEditor.getSelectedNodeByType(editor, 'table') as TableElement
     if (tableNode == null) {
       // 选区未处于 table cell node ，则禁用
       return true
     }
+    if (tableNode.isChooser) {
+      return true
+    }
+
     return false
   }
 

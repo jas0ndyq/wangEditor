@@ -46,13 +46,14 @@ function renderTable(elemNode: SlateElement, children: VNode[] | null, editor: I
   const editable = getContentEditable(editor, elemNode)
 
   // 宽度
-  const { width = 'auto' } = elemNode as TableElement
-
+  const { width = 'auto', isChooser } = elemNode as TableElement
+  console.log("isChooser", isChooser);
   // 是否选中
   const selected = DomEditor.isNodeSelected(editor, elemNode)
 
   // 第一行的 cells ，以计算列宽
   const firstRowCells = getFirstRowCells(elemNode as TableElement)
+  
 
   const vnode = (
     <div
@@ -80,7 +81,7 @@ function renderTable(elemNode: SlateElement, children: VNode[] | null, editor: I
         },
       }}
     >
-      <table width={width} contentEditable={editable}>
+      <table  width={width} contentEditable={editable && !isChooser} style={{userSelect: isChooser ? "none" : "auto"}}>
         <colgroup>
           {firstRowCells.map(cell => {
             const { width = 'auto' } = cell
@@ -91,6 +92,7 @@ function renderTable(elemNode: SlateElement, children: VNode[] | null, editor: I
       </table>
     </div>
   )
+  
   return vnode
 }
 

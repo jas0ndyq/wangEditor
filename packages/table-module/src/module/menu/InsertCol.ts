@@ -30,9 +30,12 @@ class InsertCol implements IButtonMenu {
     if (selection == null) return true
     if (!Range.isCollapsed(selection)) return true
 
-    const tableNode = DomEditor.getSelectedNodeByType(editor, 'table')
+    const tableNode = DomEditor.getSelectedNodeByType(editor, 'table') as TableElement
     if (tableNode == null) {
       // 选区未处于 table cell node ，则禁用
+      return true
+    }
+    if (tableNode.isChooser) {
       return true
     }
     return false

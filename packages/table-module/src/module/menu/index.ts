@@ -3,7 +3,7 @@
  * @author wangfupeng
  */
 
-import InsertTable from './InsertTable'
+import eduInsertTable from './InsertTable'
 import DeleteTable from './DeleteTable'
 import InsertRow from './InsertRow'
 import DeleteRow from './DeleteRow'
@@ -11,11 +11,13 @@ import InsertCol from './InsertCol'
 import DeleteCol from './DeleteCol'
 import TableHander from './TableHeader'
 import FullWidth from './FullWidth'
+import TableChooser from './TableChooser'
+import TableMerger from './TableMerger'
 
 export const insertTableMenuConf = {
   key: 'insertTable',
   factory() {
-    return new InsertTable()
+    return new eduInsertTable()
   },
 }
 
@@ -58,6 +60,20 @@ export const tableHeaderMenuConf = {
   key: 'tableHeader',
   factory() {
     return new TableHander()
+  },
+}
+
+export const tableChooserMenuConf = {
+  key: 'tableChooser',
+  factory() {
+    return new TableChooser()
+  },
+}
+
+export const tableMergerMenuConf = {
+  key: 'tableMerger',
+  factory() {
+    return new TableMerger()
   },
 }
 

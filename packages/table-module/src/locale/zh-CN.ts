@@ -13,5 +13,6 @@ export default {
     insertRow: '插入行',
     insertTable: '插入表格',
     header: '表头',
+    chooser: '选择合并模式',
   },
 }

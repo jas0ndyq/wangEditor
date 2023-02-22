@@ -55,7 +55,6 @@
     "@wangeditor/code-highlight": "^1.0.3",
     "@wangeditor/core": "^1.1.19",
     "@wangeditor/list-module": "^1.0.5",
-    "@wangeditor/table-module": "^1.1.4",
     "@wangeditor/upload-image-module": "^1.0.2",
     "@wangeditor/video-module": "^1.1.4",
     "dom7": "^3.0.0",
