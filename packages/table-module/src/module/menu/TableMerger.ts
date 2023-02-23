@@ -3,16 +3,16 @@
  * @author wangfupeng
  */
 
-import { Transforms, Range } from 'slate'
+import { Transforms, Range, Editor } from 'slate'
 import { IButtonMenu, IDomEditor, DomEditor, t } from '@wangeditor/core'
-import { CELL_CHOOSE_SVG } from '../../constants/svg'
+import { CELL_MERGE_SVG } from '../../constants/svg'
 import { TableElement } from '../custom-types'
 import { getFirstRowCells, isTableWithChooser } from '../helpers'
 import { mergeAll, regTableMouseMoveEvent } from '@wangeditor/table-module/src/utils/table'
 
 class TableMerger implements IButtonMenu {
-  readonly title = t('tableModule.chooser')
-  readonly iconSvg = CELL_CHOOSE_SVG
+  readonly title = t('tableModule.merger')
+  readonly iconSvg = CELL_MERGE_SVG
   readonly tag = 'button'
 
   // 是否已设置表头
@@ -30,7 +30,7 @@ class TableMerger implements IButtonMenu {
   isDisabled(editor: IDomEditor): boolean {
     const { selection } = editor
     if (selection == null) return true
-    if (!Range.isCollapsed(selection)) return true
+    // if (!Range.isCollapsed(selection)) return true
 
     const tableNode = DomEditor.getSelectedNodeByType(editor, 'table') as TableElement
     if (tableNode == null) {
@@ -47,8 +47,32 @@ class TableMerger implements IButtonMenu {
     if (tableNode == null) return
     console.log('tableNode is: ', tableNode, DomEditor.toDOMNode(editor, tableNode))
     const tableDomNode = DomEditor.toDOMNode(editor, tableNode).querySelector('table')!
+
     if (tableDomNode) {
-      mergeAll(tableDomNode)
+      mergeAll(tableDomNode, (domNode: any) => {
+        // const slateNode = DomEditor.toSlateNode(editor, domNode)
+        // console.log('slateNode: ', slateNode)
+        // console.log('domNode: ', domNode)
+        // console.log('=============')
+        // const path = DomEditor.findPath(editor, slateNode)
+        // Transforms.removeNodes(editor, {
+        //   at: path,
+        // })
+      })
+      setTimeout(() => {
+        console.log('timer')
+        // const tdDeletedList = tableDomNode.querySelectorAll('td[data-delete="1"]')
+        Transforms.removeNodes(editor, {
+          at: DomEditor.findPath(editor, tableNode),
+          match: (node, path) => {
+            const domNode = DomEditor.toDOMNode(editor, node)
+            return domNode.hasAttribute('data-delete')
+          },
+        })
+        // tdDeletedList.forEach(el => {
+        //   el.remove()
+        // })
+      }, 50)
     }
   }
 }

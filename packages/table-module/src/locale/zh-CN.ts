@@ -14,5 +14,7 @@ export default {
     insertTable: '插入表格',
     header: '表头',
     chooser: '选择合并模式',
+    merger: '合并',
+    spliter: '拆分',
   },
 }

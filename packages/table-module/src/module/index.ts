@@ -19,6 +19,7 @@ import {
   // tableHeaderMenuConf,
   tableChooserMenuConf,
   tableMergerMenuConf,
+  tableSpliterMenuConf,
   tableFullWidthMenuConf,
 } from './menu/index'
 
@@ -37,6 +38,7 @@ const table: Partial<IModuleConf> = {
     // tableHeaderMenuConf,
     tableChooserMenuConf,
     tableMergerMenuConf,
+    tableSpliterMenuConf,
     tableFullWidthMenuConf,
   ],
   editorPlugin: withTable,

@@ -3,6 +3,7 @@
  * @author wangfupeng
  */
 
+import { DomEditor } from '@wangeditor/core'
 import { Element } from 'slate'
 import { TableCellElement, TableRowElement, TableElement } from './custom-types'
 
@@ -23,7 +24,13 @@ function tableCellToHtml(cellNode: Element, childrenHtml: string): string {
     isHeader = false,
     width = 'auto',
   } = cellNode as TableCellElement
-  const tag = isHeader ? 'th' : 'td'
+  // const tag = isHeader ? 'th' : 'td'
+  const tag = isHeader ? 'td' : 'td'
+
+  console.log('tableCellToHtml cellDomNode', cellNode)
+  // const cellDomNode = DomEditor.toDOMNode(editor, cellNode)
+  // const colspan = cellDomNode.getAttribute('colSpan')
+  // const rowspan = cellDomNode.getAttribute('rowspan')
   return `<${tag} colSpan="${colSpan}" rowSpan="${rowSpan}" width="${width}">${childrenHtml}</${tag}>`
 }
 

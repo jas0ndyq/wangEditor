@@ -13,6 +13,7 @@ import TableHander from './TableHeader'
 import FullWidth from './FullWidth'
 import TableChooser from './TableChooser'
 import TableMerger from './TableMerger'
+import TableSpliter from './TableSpliter'
 
 export const insertTableMenuConf = {
   key: 'insertTable',
@@ -74,6 +75,13 @@ export const tableMergerMenuConf = {
   key: 'tableMerger',
   factory() {
     return new TableMerger()
+  },
+}
+
+export const tableSpliterMenuConf = {
+  key: 'tableSpliter',
+  factory() {
+    return new TableSpliter()
   },
 }
 

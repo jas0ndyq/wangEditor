@@ -210,22 +210,18 @@ export function splitAllWithNode(
     let rowOffset = rowspan - 1
     let trOffset = tdDomParent.nextElementSibling
     while (rowOffset > 0) {
-      const childList: any = []
-      for (let i = 1; i <= colspan; i++) {
-        childList.push({ type: 'table-cell', children: [{ text: '' }] })
-      }
       if (!trOffset || trOffset.nodeName != 'TR') {
         trOffset = document.createElement('tr')
-        const newRow = { type: 'table-row', children: childList }
-        Transforms.insertNodes(editor, newRow, { at: parentTrPath })
-      } else {
-        const idx =
-          trOffset.childNodes.length > startIdx ? startIdx : trOffset.childNodes.length - 1
-        const targetNode = trOffset.childNodes[idx]
-        const targetSlateNode = DomEditor.toSlateNode(editor, targetNode)
-        const targetNodePath = DomEditor.findPath(editor, targetSlateNode)
-        Transforms.insertNodes(editor, childList, { at: targetNodePath })
       }
+      const childList: any = []
+      for (let i = 1; i <= colspan; i++) {
+        // trOffset.appendChild(document.createElement('td'))
+        childList.push({ type: 'table-cell', children: [{ text: '' }] })
+      }
+      const targetNode = trOffset.childNodes[0]
+      const targetSlateNode = DomEditor.toSlateNode(editor, targetNode)
+      const targetNodePath = DomEditor.findPath(editor, targetSlateNode)
+      Transforms.insertNodes(editor, childList, { at: targetNodePath })
 
       trOffset = trOffset.nextElementSibling
       rowOffset--
