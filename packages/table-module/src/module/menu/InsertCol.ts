@@ -62,14 +62,17 @@ class InsertCol implements IButtonMenu {
 
       const cells = row.children || []
       // 遍历一个 row 的所有 cells
-      cells.forEach((cell: Node) => {
+      const cellsLength = cells.length
+      cells.forEach((cell: Node, cellIdx: number) => {
         const path = DomEditor.findPath(editor, cell)
-        if (
-          path.length === selectedCellPath.length &&
-          isEqual(path.slice(-1), selectedCellPath.slice(-1)) // 俩数组，最后一位相同
-        ) {
-          // 如果当前 td 的 path 和选中 td 的 path ，最后一位相同，说明是同一列
-          // 则在其后插入一个 cell
+        // if (
+        //   path.length === selectedCellPath.length &&
+        //   isEqual(path.slice(-1), selectedCellPath.slice(-1)) // 俩数组，最后一位相同
+        // ) {
+        //  // 如果当前 td 的 path 和选中 td 的 path ，最后一位相同，说明是同一列
+        //  // 则在其后插入一个 cell
+        if (cellIdx == cellsLength - 1) {
+          // 暂时支持在行尾插入列
           const newCell: TableCellElement = { type: 'table-cell', children: [{ text: '' }] }
           if (rowIndex === 0 && isTableWithHeader(tableNode)) {
             newCell.isHeader = true

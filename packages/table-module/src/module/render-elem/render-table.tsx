@@ -85,12 +85,12 @@ function renderTable(elemNode: SlateElement, children: VNode[] | null, editor: I
         contentEditable={editable && !isChooser}
         style={{ userSelect: isChooser ? 'none' : 'auto' }}
       >
-        <colgroup>
+        {/* <colgroup>
           {firstRowCells.map(cell => {
             const { width = 'auto' } = cell
             return <col width={width}></col>
           })}
-        </colgroup>
+        </colgroup> */}
         <tbody>{children}</tbody>
       </table>
     </div>

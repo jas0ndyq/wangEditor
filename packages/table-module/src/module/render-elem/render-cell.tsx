@@ -57,14 +57,16 @@ const onMouseMove = throttle(function (event: Event) {
   event.preventDefault()
 
   const { clientX } = event as MouseEvent
-  let newWith = cellWidthWhenMouseDown + (clientX - clientXWhenMouseDown) // 计算新宽度
-  newWith = Math.floor(newWith * 100) / 100 // 保留小数点后两位
-  if (newWith < 30) newWith = 30 // 最小宽度
+  let newWidth = cellWidthWhenMouseDown + (clientX - clientXWhenMouseDown) // 计算新宽度
+  newWidth = Math.floor(newWidth * 100) / 100 // 保留小数点后两位
+  if (newWidth < 30) newWidth = 30 // 最小宽度
+
+  console.log('new width', newWidth)
 
   // 这是宽度
   Transforms.setNodes(
     editorWhenMouseDown,
-    { width: newWith.toString() },
+    { width: newWidth.toString() },
     {
       at: cellPathWhenMouseDown,
     }
@@ -77,16 +79,21 @@ function renderTableCell(
   editor: IDomEditor
 ): VNode {
   const isFirstRow = isCellInFirstRow(editor, cellNode as TableCellElement)
-  const { colSpan = 1, rowSpan = 1, isHeader = false } = cellNode as TableCellElement
+  const {
+    colSpan = 1,
+    rowSpan = 1,
+    isHeader = false,
+    width = 'auto',
+  } = cellNode as TableCellElement
 
   // ------------------ 不是第一行，直接渲染 <td> ------------------
-  if (!isFirstRow) {
-    return (
-      <td colSpan={colSpan} rowSpan={rowSpan}>
-        {children}
-      </td>
-    )
-  }
+  // if (!isFirstRow) {
+  //   return (
+  //     <td colSpan={colSpan} rowSpan={rowSpan}>
+  //       {children}
+  //     </td>
+  //   )
+  // }
 
   // ------------------ 是第一行：1. 判断 th ；2. 拖拽列宽 ------------------
   // const Tag = isHeader ? 'th' : 'td'
@@ -96,7 +103,7 @@ function renderTableCell(
     <Tag
       colSpan={colSpan}
       rowSpan={rowSpan}
-      style={{ borderRightWidth: '3px' }}
+      style={{ borderRightWidth: '3px', width: width == 'auto' ? 'auto' : width + 'px' }}
       on={{
         mousemove: throttle(function (this: VNode, event: MouseEvent) {
           const elem = this.elm as HTMLElement

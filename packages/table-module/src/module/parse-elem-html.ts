@@ -25,6 +25,7 @@ function parseCellHtml(
   if (children.length === 0) {
     children = [{ text: $elem.text().replace(/\s+/gm, ' ') }]
   }
+  console.log("$elem.attr('colSpan')", $elem.attr('colSpan'), $elem.attr('colspan'))
   const colSpan = parseInt($elem.attr('colSpan') || '1')
   const rowSpan = parseInt($elem.attr('rowSpan') || '1')
   const width = $elem.attr('width') || 'auto'

@@ -51,9 +51,31 @@ class InsertRow implements IButtonMenu {
 
     // 获取 cell length ，即多少列
     const rowNode = DomEditor.getParentNode(editor, cellNode)
-    const cellsLength = rowNode?.children.length || 0
+    if (!rowNode) {
+      return
+    }
+    let cellsLength = rowNode?.children.length || 0
+    const rowNodeList = DomEditor.getParentNode(editor, rowNode)?.children.filter(el =>
+      DomEditor.checkNodeType(el, 'table-row')
+    )
+    let maxColSpan = 0
+    rowNodeList?.forEach((rowEl: any) => {
+      let colspan = 0
+      rowEl?.children.forEach(slateNode => {
+        const domNode = DomEditor.toDOMNode(editor, slateNode)
+        const col = domNode.getAttribute('colspan')
+        if (col) {
+          colspan += +col
+        } else {
+          colspan++
+        }
+      })
+      maxColSpan = colspan > maxColSpan ? colspan : maxColSpan
+    })
     if (cellsLength === 0) return
-
+    if (maxColSpan > cellsLength) {
+      cellsLength = maxColSpan
+    }
     // 拼接新的 row
     const newRow: TableRowElement = { type: 'table-row', children: [] }
     for (let i = 0; i < cellsLength; i++) {

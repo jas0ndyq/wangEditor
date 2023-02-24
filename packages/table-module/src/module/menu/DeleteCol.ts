@@ -8,6 +8,7 @@ import { Editor, Element, Transforms, Range, Node } from 'slate'
 import { IButtonMenu, IDomEditor, DomEditor, t } from '@wangeditor/core'
 import { DEL_COL_SVG } from '../../constants/svg'
 import { TableElement } from '../custom-types'
+import { checkCellNodeColSiblingHasBigCell, generateTableCellModel } from '../../utils/table'
 
 class DeleteCol implements IButtonMenu {
   readonly title = t('tableModule.deleteCol')
@@ -25,24 +26,25 @@ class DeleteCol implements IButtonMenu {
   }
 
   isDisabled(editor: IDomEditor): boolean {
-    const { selection } = editor
-    if (selection == null) return true
-    if (!Range.isCollapsed(selection)) return true
+    // const { selection } = editor
+    // if (selection == null) return true
+    // if (!Range.isCollapsed(selection)) return true
 
-    const cellNode = DomEditor.getSelectedNodeByType(editor, 'table-cell')
-    if (cellNode == null) {
-      // 选区未处于 table cell node ，则禁用
-      return true
-    }
-    const rowNode = DomEditor.getParentNode(editor, cellNode)
-    if (!rowNode) {
-      return true
-    }
-    const tableNode = DomEditor.getParentNode(editor, rowNode) as TableElement
-    if (tableNode.isChooser) {
-      return true
-    }
-    return false
+    // const cellNode = DomEditor.getSelectedNodeByType(editor, 'table-cell')
+    // if (cellNode == null) {
+    //   // 选区未处于 table cell node ，则禁用
+    //   return true
+    // }
+    // const rowNode = DomEditor.getParentNode(editor, cellNode)
+    // if (!rowNode) {
+    //   return true
+    // }
+    // const tableNode = DomEditor.getParentNode(editor, rowNode) as TableElement
+    // if (tableNode.isChooser) {
+    //   return true
+    // }
+    // return false
+    return true
   }
 
   exec(editor: IDomEditor, value: string | boolean) {
@@ -62,11 +64,21 @@ class DeleteCol implements IButtonMenu {
       return
     }
 
+    // const tableModel = generateTableCellModel(tableNode as any, editor, 'v')
+    // console.log('table model', tableModel)
     // ------------------------- 不只有 1 列，则继续 -------------------------
 
     const tableNode = DomEditor.getParentNode(editor, rowNode)
     if (tableNode == null) return
-
+    // const tableModel = generateTableCellModel(tableNode as any, editor, 'v')
+    // console.log('table model', tableModel)
+    // const ridx = tableNode.children.indexOf(rowNode as any)
+    // const cidx = rowNode.children.indexOf(selectedCellNode as any)
+    // const isColSiblingHasBigCell = checkCellNodeColSiblingHasBigCell(ridx, cidx, tableModel)
+    // if (isColSiblingHasBigCell) {
+    //   console.warn('暂无法删除带合并格子的列！')
+    //   return
+    // }
     // 遍历所有 rows ，挨个删除 cell
     const rows = tableNode.children || []
     rows.forEach(row => {

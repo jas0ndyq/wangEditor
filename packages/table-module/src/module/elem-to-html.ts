@@ -3,21 +3,21 @@
  * @author wangfupeng
  */
 
-import { DomEditor } from '@wangeditor/core'
-import { Element } from 'slate'
+import { DomEditor, IDomEditor } from '@wangeditor/core'
+import { Editor, Element } from 'slate'
 import { TableCellElement, TableRowElement, TableElement } from './custom-types'
 
 function tableToHtml(elemNode: Element, childrenHtml: string): string {
   const { width = 'auto' } = elemNode as TableElement
 
-  return `<table style="width: ${width};"><tbody>${childrenHtml}</tbody></table>`
+  return `<table class="wangeditor-element-table" style="width: ${width};"><tbody>${childrenHtml}</tbody></table>`
 }
 
 function tableRowToHtml(elem: Element, childrenHtml: string): string {
   return `<tr>${childrenHtml}</tr>`
 }
 
-function tableCellToHtml(cellNode: Element, childrenHtml: string): string {
+function tableCellToHtml(cellNode: Element, childrenHtml: string, editor?: IDomEditor): string {
   const {
     colSpan = 1,
     rowSpan = 1,
@@ -27,11 +27,11 @@ function tableCellToHtml(cellNode: Element, childrenHtml: string): string {
   // const tag = isHeader ? 'th' : 'td'
   const tag = isHeader ? 'td' : 'td'
 
-  console.log('tableCellToHtml cellDomNode', cellNode)
-  // const cellDomNode = DomEditor.toDOMNode(editor, cellNode)
-  // const colspan = cellDomNode.getAttribute('colSpan')
-  // const rowspan = cellDomNode.getAttribute('rowspan')
-  return `<${tag} colSpan="${colSpan}" rowSpan="${rowSpan}" width="${width}">${childrenHtml}</${tag}>`
+  const cellDomNode = DomEditor.toDOMNode(editor!, cellNode)
+  console.log('tableCellToHtml cellDomNode', cellNode, cellDomNode)
+  const colspan = cellDomNode.getAttribute('colSpan') || 1
+  const rowspan = cellDomNode.getAttribute('rowspan') || 1
+  return `<${tag} colSpan="${colspan}" rowSpan="${rowspan}" width="${width}">${childrenHtml}</${tag}>`
 }
 
 export const tableToHtmlConf = {

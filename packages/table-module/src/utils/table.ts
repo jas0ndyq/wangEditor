@@ -1,6 +1,6 @@
 import { DomEditor, IDomEditor } from '@wangeditor/core'
 import { Transforms, Node, Path } from 'slate'
-import { TableCellElement, TableRowElement } from '../module/custom-types'
+import { TableCellElement, TableElement, TableRowElement } from '../module/custom-types'
 
 declare global {
   var REDIPS: any
@@ -231,5 +231,119 @@ export function splitAllWithNode(
       rowOffset--
     }
   }
+  // Transforms.setNodes(
+  //   editor,
+  //   { colSpan: 1, rowSpan: 1 },
+  //   {
+  //     at: DomEditor.findPath(editor, td),
+  //   }
+  // )
   resetREDIPSSelected($table)
+}
+
+type TableModel = {
+  flag: boolean
+  target: [number, number]
+}[][]
+
+export function generateTableCellModel(
+  table: TableElement,
+  editor: IDomEditor,
+  direction: 'v' | 'h'
+) {
+  let maxColSpan = 0
+  const tableModel: TableModel = []
+
+  table.children?.forEach((rowEl: any) => {
+    tableModel.push([])
+    let colspan = 0
+    rowEl?.children.forEach(slateNode => {
+      const domNode = DomEditor.toDOMNode(editor, slateNode)
+      const col = domNode.getAttribute('colspan')
+      if (col) {
+        colspan += +col
+      } else {
+        colspan++
+      }
+    })
+    maxColSpan = colspan > maxColSpan ? colspan : maxColSpan
+  })
+  tableModel.forEach((row, ridx) => {
+    let start = 0
+    while (start < maxColSpan) {
+      row.push({
+        flag: false,
+        target: [ridx, start],
+      })
+      start++
+    }
+  })
+  if (direction == 'v') {
+    table.children?.forEach((rowEl: any, ridx: number) => {
+      let left = 0
+
+      for (let i = 0; i < tableModel[ridx].length; i++) {
+        if (i == 0 && !tableModel[ridx][i].flag) {
+          break
+        }
+        if (tableModel[ridx][i].flag) {
+          left++
+        } else {
+          break
+        }
+      }
+      rowEl?.children.forEach((cellEl: any, cidx: number) => {
+        const cellDomNode = DomEditor.toDOMNode(editor, cellEl)
+        const col = cellDomNode.getAttribute('colspan')
+        const row = cellDomNode.getAttribute('rowspan')
+        const colspan = col ? +col : 1
+        const rowspan = row ? +row : 1
+        if (colspan > 1) {
+          for (let r = ridx; r < ridx + rowspan; r++) {
+            for (let i = left; i < left + colspan; i++) {
+              tableModel[r][i] = {
+                flag: true,
+                target: [ridx, cidx],
+              }
+            }
+          }
+        }
+        left += colspan
+      })
+    })
+  } else {
+  }
+  return tableModel
+}
+
+export function checkCellNodeColSiblingHasBigCell(
+  ridx: number,
+  cidx: number,
+  tableModel: TableModel
+) {
+  let realCidx = 0
+  let realCidxCount = 0
+  for (let i = 0; i < tableModel[ridx].length; i++) {
+    if (!tableModel[ridx][i].flag) {
+      realCidxCount++
+    }
+    if (realCidxCount - 1 == cidx) {
+      realCidx = i
+      break
+    }
+    console.log('realCidxCount', realCidxCount)
+  }
+  let result = false
+  for (let i = 0; i < tableModel.length; i++) {
+    if (tableModel[i][realCidx].flag) {
+      result = true
+      break
+    }
+  }
+  // console.log('ridx', ridx)
+  // console.log('cidx', cidx)
+  // console.log('realCidx', realCidx)
+  // console.log('col ok?', result)
+  return result
+  // return tableModel.reduce((acc, cur) => (acc = (acc !== cur[realCidx].flag)), false)
 }

@@ -24,20 +24,21 @@ class DeleteRow implements IButtonMenu {
   }
 
   isDisabled(editor: IDomEditor): boolean {
-    const { selection } = editor
-    if (selection == null) return true
-    if (!Range.isCollapsed(selection)) return true
+    // const { selection } = editor
+    // if (selection == null) return true
+    // if (!Range.isCollapsed(selection)) return true
 
-    const rowNode = DomEditor.getSelectedNodeByType(editor, 'table-row')
-    if (rowNode == null) {
-      // 选区未处于 table row node ，则禁用
-      return true
-    }
-    const tableNode = DomEditor.getParentNode(editor, rowNode) as TableElement
-    if (tableNode.isChooser) {
-      return true
-    }
-    return false
+    // const rowNode = DomEditor.getSelectedNodeByType(editor, 'table-row')
+    // if (rowNode == null) {
+    //   // 选区未处于 table row node ，则禁用
+    //   return true
+    // }
+    // const tableNode = DomEditor.getParentNode(editor, rowNode) as TableElement
+    // if (tableNode.isChooser) {
+    //   return true
+    // }
+    // return false
+    return true
   }
 
   exec(editor: IDomEditor, value: string | boolean) {

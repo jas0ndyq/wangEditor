@@ -69,6 +69,7 @@ class TableMerger implements IButtonMenu {
             return domNode.hasAttribute('data-delete')
           },
         })
+
         // tdDeletedList.forEach(el => {
         //   el.remove()
         // })
