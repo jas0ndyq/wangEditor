@@ -39,9 +39,9 @@ const table: Partial<IModuleConf> = {
     // tableHeaderMenuConf,
     tableChooserMenuConf,
     tableMergerMenuConf,
-    cellColorMenuConf,
     tableSpliterMenuConf,
     tableFullWidthMenuConf,
+    cellColorMenuConf,
   ],
   editorPlugin: withTable,
 }

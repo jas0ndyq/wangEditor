@@ -51,7 +51,7 @@ import { mergeAll, regTableMouseMoveEvent } from '@wangeditor/table-module/src/u
 
 
 class CellColor implements IDropPanelMenu {
-  readonly title = "背景色"
+  readonly title = "单元格背景色"
   readonly iconSvg = CELL_COLOR_SVG
   readonly tag = 'button'
   readonly showDropPanel = true // 点击 button 时显示 dropPanel
