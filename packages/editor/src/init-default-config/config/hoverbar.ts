@@ -27,6 +27,7 @@ const COMMON_HOVERBAR_KEYS = {
       // 'tableHeader',
       'tableChooser',
       'tableMerger',
+      'cellColor',
       'tableSpliter',
       'tableFullWidth',
       'insertTableRow',

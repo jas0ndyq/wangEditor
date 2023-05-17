@@ -23,6 +23,7 @@ function tableCellToHtml(cellNode: Element, childrenHtml: string, editor?: IDomE
     rowSpan = 1,
     isHeader = false,
     width = 'auto',
+    backgroundColor = '',
   } = cellNode as TableCellElement
   // const tag = isHeader ? 'th' : 'td'
   const tag = isHeader ? 'td' : 'td'
@@ -31,7 +32,7 @@ function tableCellToHtml(cellNode: Element, childrenHtml: string, editor?: IDomE
   console.log('tableCellToHtml cellDomNode', cellNode, cellDomNode)
   const colspan = cellDomNode.getAttribute('colSpan') || 1
   const rowspan = cellDomNode.getAttribute('rowspan') || 1
-  return `<${tag} colSpan="${colspan}" rowSpan="${rowspan}" width="${width}">${childrenHtml}</${tag}>`
+  return `<${tag} colSpan="${colspan}" rowSpan="${rowspan}" width="${width}" style="background-color: ${backgroundColor}">${childrenHtml}</${tag}>`
 }
 
 export const tableToHtmlConf = {

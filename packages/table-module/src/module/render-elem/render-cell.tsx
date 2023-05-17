@@ -84,6 +84,7 @@ function renderTableCell(
     rowSpan = 1,
     isHeader = false,
     width = 'auto',
+    backgroundColor = '',
   } = cellNode as TableCellElement
 
   // ------------------ 不是第一行，直接渲染 <td> ------------------
@@ -103,7 +104,11 @@ function renderTableCell(
     <Tag
       colSpan={colSpan}
       rowSpan={rowSpan}
-      style={{ borderRightWidth: '3px', width: width == 'auto' ? 'auto' : width + 'px' }}
+      style={{
+        borderRightWidth: '1px',
+        backgroundColor: backgroundColor || '',
+        width: width == 'auto' ? 'auto' : width + 'px',
+      }}
       on={{
         mousemove: throttle(function (this: VNode, event: MouseEvent) {
           const elem = this.elm as HTMLElement

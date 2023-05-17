@@ -47,7 +47,7 @@ function renderTable(elemNode: SlateElement, children: VNode[] | null, editor: I
 
   // 宽度
   const { width = 'auto', isChooser } = elemNode as TableElement
-  console.log('isChooser', isChooser)
+  console.log('isChooser1', isChooser)
   // 是否选中
   const selected = DomEditor.isNodeSelected(editor, elemNode)
 

@@ -14,6 +14,7 @@ export type TableCellElement = {
   rowSpan?: number
   width?: string // 只作用于第一行（尚未考虑单元格合并！）
   children: Text[]
+  backgroundColor?: string;
 }
 
 export type TableRowElement = {

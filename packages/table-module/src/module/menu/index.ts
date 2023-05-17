@@ -14,6 +14,7 @@ import FullWidth from './FullWidth'
 import TableChooser from './TableChooser'
 import TableMerger from './TableMerger'
 import TableSpliter from './TableSpliter'
+import CellColor from './CellColor'
 
 export const insertTableMenuConf = {
   key: 'insertTable',
@@ -75,6 +76,13 @@ export const tableMergerMenuConf = {
   key: 'tableMerger',
   factory() {
     return new TableMerger()
+  },
+}
+
+export const cellColorMenuConf = {
+  key: 'cellColor',
+  factory() {
+    return new CellColor()
   },
 }
 

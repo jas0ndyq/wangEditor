@@ -29,13 +29,15 @@ function parseCellHtml(
   const colSpan = parseInt($elem.attr('colSpan') || '1')
   const rowSpan = parseInt($elem.attr('rowSpan') || '1')
   const width = $elem.attr('width') || 'auto'
-
+  const backgroundColor = ($elem[0] as HTMLElement).style.backgroundColor;
+  console.log("$elem", backgroundColor, $elem);
   return {
     type: 'table-cell',
     isHeader: getTagName($elem) === 'th',
     colSpan,
     rowSpan,
     width,
+    backgroundColor,
     // @ts-ignore
     children,
   }

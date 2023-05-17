@@ -21,6 +21,7 @@ import {
   tableMergerMenuConf,
   tableSpliterMenuConf,
   tableFullWidthMenuConf,
+  cellColorMenuConf,
 } from './menu/index'
 
 const table: Partial<IModuleConf> = {
@@ -38,6 +39,7 @@ const table: Partial<IModuleConf> = {
     // tableHeaderMenuConf,
     tableChooserMenuConf,
     tableMergerMenuConf,
+    cellColorMenuConf,
     tableSpliterMenuConf,
     tableFullWidthMenuConf,
   ],

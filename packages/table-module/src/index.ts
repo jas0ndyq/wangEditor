@@ -10,6 +10,6 @@ import './locale/index'
 
 import wangEditorTableModule from './module/index'
 
-console.log('in table module...')
+console.log('in table module...111')
 
 export default wangEditorTableModule
