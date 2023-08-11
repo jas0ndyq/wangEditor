@@ -28,11 +28,19 @@ function tableCellToHtml(cellNode: Element, childrenHtml: string, editor?: IDomE
   // const tag = isHeader ? 'th' : 'td'
   const tag = isHeader ? 'td' : 'td'
 
-  const cellDomNode = DomEditor.toDOMNode(editor!, cellNode)
-  console.log('tableCellToHtml cellDomNode', cellNode, cellDomNode)
-  const colspan = cellDomNode.getAttribute('colSpan') || 1
-  const rowspan = cellDomNode.getAttribute('rowspan') || 1
-  return `<${tag} colSpan="${colspan}" rowSpan="${rowspan}" width="${width}" style="background-color: ${backgroundColor}">${childrenHtml}</${tag}>`
+  try {
+    const cellDomNode = DomEditor.toDOMNode(editor!, cellNode);
+    const colspan = cellDomNode.getAttribute("colspan") || 1;
+    const rowspan = cellDomNode.getAttribute("rowspan") || 1;
+    console.log('tableCellToHtml cellDomNode 0', cellNode)
+    return `<${tag} colSpan="${colspan}" rowSpan="${rowspan}" width="${width}" style="background-color: ${backgroundColor}">${childrenHtml}</${tag}>`
+
+  } catch (error) {
+    console.log('tableCellToHtml cellDomNode 1', cellNode)
+    const colspan = (cellNode as any).colSpan || 1
+    const rowspan = (cellNode as any).rowSpan || 1
+    return `<${tag} colSpan="${colspan}" rowSpan="${rowspan}" width="${width}" style="background-color: ${backgroundColor}">${childrenHtml}</${tag}>`
+  }
 }
 
 export const tableToHtmlConf = {
